@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b0b0d" />
+  <title>ListingLab — Amazon Image Studio</title>
+  <meta name="description" content="Turn raw product photos into a complete Amazon-ready listing image pack." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <div class="brand-row">
+        <div class="brand-mark">L</div>
+        <div>
+          <div class="brand-name">ListingLab</div>
+          <div class="brand-sub">Amazon Image Studio</div>
+        </div>
+      </div>
+
+      <nav class="nav-stack">
+        <button class="nav-item active" data-scroll="workspace"><span>✦</span> New listing</button>
+        <button class="nav-item" data-scroll="references"><span>▣</span> Product references</button>
+        <button class="nav-item" data-scroll="productDNA"><span>⌁</span> Product DNA</button>
+        <button class="nav-item" data-scroll="results"><span>◫</span> Listing pack</button>
+      </nav>
+
+      <div class="sidebar-card">
+        <div class="sidebar-card-label">Output plan</div>
+        <strong>10 Amazon-ready assets</strong>
+        <p>Main image, angles, detail, features, dimensions, lifestyle, package and hero creative.</p>
+      </div>
+
+      <div class="sidebar-footer">
+        <span class="status-dot"></span>
+        <span id="apiStatus">AI connection ready after API setup</span>
+      </div>
+    </aside>
+
+    <main class="main-content" id="workspace">
+      <header class="topbar">
+        <div>
+          <span class="eyebrow">AI COMMERCE WORKSPACE</span>
+          <h1>Build your Amazon listing pack.</h1>
+          <p>Upload real product photos. ListingLab uses them as locked references, then creates ten purpose-built listing images.</p>
+        </div>
+        <div class="top-actions">
+          <button class="ghost-btn" id="resetBtn">Reset</button>
+          <button class="primary-btn compact" id="generateTopBtn">Generate pack <span>→</span></button>
+        </div>
+      </header>
+
+      <section class="stats-strip">
+        <div class="stat"><span>References</span><strong id="refCount">0</strong><small>/ 8 uploaded</small></div>
+        <div class="divider"></div>
+        <div class="stat"><span>Product DNA</span><strong id="dnaStatus">Manual</strong><small>or analyze with AI</small></div>
+        <div class="divider"></div>
+        <div class="stat"><span>Listing assets</span><strong id="assetCount">0</strong><small>/ 10 generated</small></div>
+        <div class="divider"></div>
+        <div class="stat"><span>Amazon format</span><strong>1:1</strong><small>1024 × 1024</small></div>
+      </section>
+
+      <section class="panel upload-panel" id="references">
+        <div class="section-head">
+          <div>
+            <span class="step-pill">01</span>
+            <h2>Upload product references</h2>
+            <p>Use 3–8 clear angles. Front, back, side, hardware, fabric and packaging photos work best.</p>
+          </div>
+          <span class="rule-badge">PRODUCT LOCK</span>
+        </div>
+
+        <label class="drop-zone" id="dropZone" for="fileInput">
+          <input type="file" id="fileInput" accept="image/png,image/jpeg,image/webp" multiple hidden />
+          <div class="drop-icon">↑</div>
+          <div>
+            <strong>Drop product photos here</strong>
+            <p>PNG, JPG or WEBP · up to 8 files · max 10 MB each</p>
+          </div>
+          <button type="button" class="secondary-btn" id="browseBtn">Choose photos</button>
+        </label>
+
+        <div class="reference-grid" id="referenceGrid"></div>
+      </section>
+
+      <section class="panel" id="productDNA">
+        <div class="section-head dna-head">
+          <div>
+            <span class="step-pill">02</span>
+            <h2>Lock the Product DNA</h2>
+            <p>These facts become non-negotiable constraints in every image prompt.</p>
+          </div>
+          <button class="secondary-btn sparkle" id="analyzeBtn">✦ Analyze uploaded photos</button>
+        </div>
+
+        <div class="form-grid">
+          <label>
+            <span>Product name</span>
+            <input id="productName" placeholder="e.g. Oxford Crossbody Sling Bag" />
+          </label>
+          <label>
+            <span>Category</span>
+            <input id="category" placeholder="e.g. Bags & Luggage" />
+          </label>
+          <label>
+            <span>Primary color</span>
+            <input id="color" placeholder="e.g. Deep Chocolate Brown" />
+          </label>
+          <label>
+            <span>Material</span>
+            <input id="material" placeholder="e.g. Oxford fabric" />
+          </label>
+          <label>
+            <span>Dimensions</span>
+            <input id="dimensions" placeholder="e.g. 30 × 18 × 8 cm" />
+          </label>
+          <label>
+            <span>Included items</span>
+            <input id="included" placeholder="e.g. Main bag + detachable pouch" />
+          </label>
+          <label class="span-2">
+            <span>Verified features</span>
+            <textarea id="features" rows="3" placeholder="Only facts you can prove. Example: adjustable strap, 3 zip compartments, water-resistant outer fabric"></textarea>
+          </label>
+          <label class="span-2">
+            <span>Do not change</span>
+            <textarea id="lockedDetails" rows="3" placeholder="e.g. Preserve exact logo placement, zipper count, strap attachment points, stitching, hardware finish and panel proportions"></textarea>
+          </label>
+        </div>
+
+        <div class="lock-note">
+          <div class="lock-icon">⌾</div>
+          <div><strong>Identity-first generation</strong><p>Every image request tells the model to preserve the exact product identity, construction, material texture, proportions, color and visible details from your references.</p></div>
+        </div>
+      </section>
+
+      <section class="panel results-panel" id="results">
+        <div class="section-head">
+          <div>
+            <span class="step-pill">03</span>
+            <h2>Your 10-image listing pack</h2>
+            <p>Generate everything, or work slot-by-slot. Regenerating one image does not touch the others.</p>
+          </div>
+          <button class="primary-btn" id="generateAllBtn">Generate all 10 <span>✦</span></button>
+        </div>
+
+        <div class="progress-wrap hidden" id="progressWrap">
+          <div class="progress-copy"><span id="progressText">Preparing…</span><span id="progressPct">0%</span></div>
+          <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+        </div>
+
+        <div class="asset-grid" id="assetGrid"></div>
+      </section>
+
+      <footer class="footer-note">ListingLab MVP · Built for Amazon listing workflows</footer>
+    </main>
+  </div>
+
+  <div class="toast" id="toast"></div>
+  <script src="/app.js"></script>
+</body>
+</html>
