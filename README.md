@@ -34,3 +34,5 @@ Import the repo into Vercel, add `OPENAI_API_KEY` in Project Settings → Enviro
 ## Upload handling
 
 The UI accepts source images up to 10 MB each, then compresses reference copies in-browser to stay within serverless request-size constraints. Your original local files are not modified.
+
+Deployment refreshed after production environment setup.
